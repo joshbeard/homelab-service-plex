@@ -1,0 +1,28 @@
+- name: "Plex LXC Container on Proxmox"
+  hosts: proxmox
+  gather_facts: true
+  tasks:
+    - include_role:
+        name: jbeard.proxmox-lxc
+      vars:
+        proxmox_lxc_list:
+          # Plex Server
+          - hostname: plex
+            description: "Plex Media Server (Ubuntu) - plex.jbeard.dev\n\nCreated and Managed with Ansible"
+            net0: name=eth0,bridge=vmbr0,ip=10.0.13.20/24,gw=10.0.13.1,firewall=0
+            ostemplate: local:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz
+            ssh_public_keys: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3NO0A5ZE5YAxo16ZuoFjhC2OYzZ6XESGasooMG7GaB6PUjHaG4EWLq5ivDzy8sNO09HbatyzE6Uf0F+xMRa317RjNfWQfVT6SuZNQqVT/Z6Fq3bbQs7uAV7xnEcgtkQtVxQjuN0qwztliELSzF5jdAaXCy0CpoldfiKbgND1rqqUR8sGQN5OVcPkV3/v2klz+D+in4fktjwJhyx4ct1d4K/2DfRISSJUym3Ax8mR5vEfoJuo6OQca0sGiCbyrgn1XGoibW19Y67MeRMcc93y6nKM4N6rzPweWyug/8+X9jFDbnLL/OZfws6XFnhMGro8FuTMFbC6qUQXqPshnJGTeQrZurvTC6Pv/icKkO4wg7J17Ettob3yXpYaqMkTHl3Bfuc16JIUejuaTZpTYZVgPrx5A5Ze+wI3io4neF29S3YpZr4QJEes8ofPxIKYTsywdKfMOVyvlqv1OdAr7ChGhjkzNV8EIETM79EFIzBB3OMELf5fFbaSRJozsWIf63r71hT6QrnTizA1topYGS1l+fBZkvlE+Q9lXn4AvsrSmUYKO+HnbmWdUf/QVmXX9M4YE4FLas4iNJomlZs6P6G0zOKn0EWzjHNJteKdIZOLISg1wBJ6bEP7igX6eIM9hYIKweLWnIm83RZ6Xz0/YKnObyHTOWIImJ4fzD+08o+1AWQ== josh
+            password: bootstrap
+            rootfs: 'store:10'
+            memory: 8192
+            cores: 2
+            mounts:
+              - /store/data/services/plex,mp=/opt/plex-data
+              - /store/media,mp=/store/media
+            host_dirs:
+              - /store/data/services/plex
+            node: proxmox
+            swap: 512
+            start: true
+            storage: store
+            onboot: true
