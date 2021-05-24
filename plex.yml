@@ -1,0 +1,39 @@
+# -----------------------------------------------------------------------------
+# Plex Media Server Playbook
+# Refer to the group variables under ../group_vars/plex.yml
+#
+# Plex is served by an Ubuntu LXC container.
+# -----------------------------------------------------------------------------
+---
+- name: "SSL NFS storage"
+  hosts: nfs
+  gather_facts: true
+  tasks:
+    - include_role:
+        name: jbeard.nfs
+      vars:
+        nfs_exports:
+          - media: /store/media 10.0.13.0/24(sync,rw,no_root_squash,no_subtree_check)
+          - media_movies: /store/media/Videos/movies 10.0.13.0/24(sync,rw,no_root_squash,no_subtree_check)
+          - media_downloads: /store/media/downloads 10.0.13.0/24(sync,rw,no_root_squash,no_subtree_check)
+
+
+
+- name: Plex Media Server
+  hosts: plex
+  gather_facts: false
+  tasks:
+    - name: Plex | Dependencies
+      ansible.builtin.package:
+        name:
+          - gpg
+        state: present
+
+- name: Plex Media Server
+  hosts: plex
+  gather_facts: true
+  roles:
+    - { role: marvinpinto.plex, become: true, tags: ["plex"] }
+  vars:
+    plex_app_transcode_directory: '/opt/plex-data/transcode'
+    plex_app_library_directory: '/opt/plex-data/library'
