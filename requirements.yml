@@ -4,6 +4,8 @@ collections:
     version: refactor
 
 roles:
+  - src: marvinpinto.plex
+
   - src: https://gitlab.com/jbeard.dev/ansible/jbeard-proxmox_lxc.git
     scm: git
     name: jbeard.proxmox-lxc
