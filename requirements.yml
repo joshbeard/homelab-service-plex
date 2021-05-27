@@ -1,0 +1,9 @@
+collections:
+  - name: https://code.home.jbeard.dev/homelab/platform/homelab-base.git
+    type: git
+    version: refactor
+
+roles:
+  - src: https://gitlab.com/jbeard.dev/ansible/jbeard-proxmox_lxc.git
+    scm: git
+    name: jbeard.proxmox-lxc
