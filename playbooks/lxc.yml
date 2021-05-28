@@ -3,7 +3,7 @@
   gather_facts: true
   tasks:
     - include_role:
-        name: jbeard.proxmox-lxc
+        name: jbeard.proxmox_lxc
       vars:
         proxmox_lxc_list:
           # Plex Server

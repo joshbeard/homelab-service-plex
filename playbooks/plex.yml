@@ -10,7 +10,7 @@
   gather_facts: true
   tasks:
     - include_role:
-        name: jbeard.nfs
+        name: jbeard.homelab.nfs
       vars:
         nfs_exports:
           - media: /store/media 10.0.13.0/24(sync,rw,no_root_squash,no_subtree_check)
