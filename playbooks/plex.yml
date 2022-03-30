@@ -5,7 +5,7 @@
 # Plex is served by an Ubuntu LXC container.
 # -----------------------------------------------------------------------------
 ---
-- name: "SSL NFS storage"
+- name: "Media NFS storage"
   hosts: nfs
   gather_facts: true
   tasks:
